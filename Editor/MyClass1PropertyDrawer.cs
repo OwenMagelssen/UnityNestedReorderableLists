@@ -26,6 +26,8 @@ public class MyClass1PropertyDrawer : PropertyDrawer
     public override void OnGUI(Rect position, SerializedProperty property, GUIContent label)
     {
         EditorGUI.BeginProperty(position, label, property);
+        property.serializedObject.Update();
+        
         myClassObject = fieldInfo.GetValue(property.serializedObject.targetObject) as MyClass1;
 
         myInt = property.FindPropertyRelative("myInt");
@@ -61,6 +63,8 @@ public class MyClass1PropertyDrawer : PropertyDrawer
         }
 
         property.FindPropertyRelative("elementHeight").floatValue = height + EditorGUIUtility.standardVerticalSpacing;
+        
+        property.serializedObject.ApplyModifiedProperties();
         EditorGUI.EndProperty();
     }
 
